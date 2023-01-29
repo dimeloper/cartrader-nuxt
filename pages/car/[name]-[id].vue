@@ -26,5 +26,12 @@ const car = computed(() => {
   );
 });
 
+if (!car.value) {
+  throw createError({
+    statusCode: 404,
+    message: `Car with id of ${route.params.id} does not exist.`,
+  });
+}
+
 definePageMeta({ layout: 'custom' });
 </script>
