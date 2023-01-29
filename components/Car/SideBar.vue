@@ -1,7 +1,7 @@
 <template>
   <!-- CAR SIDE BAR -->
   <div
-    class="shadow border w-64 mr-10 z-30 h-[190px]">
+    class="shadow border min-w-[200px] w-64 mr-10 z-30 h-[190px]">
     <div
       class="relative flex justify-between p-5 border-b cursor-pointer">
       <h3>Location</h3>
