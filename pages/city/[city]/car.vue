@@ -1,17 +1,15 @@
 <template>
   <div>
-    <div
-      class="w-3/5 pb-16 mx-auto mt-4 space-y-4 max-w-7xl xs:px-8 sm:px-10 lg:px-16">
-      <div class="flex mt-32">
-        <CarSideBar />
-        <NuxtPage />
-      </div>
+    <div class="flex mt-32">
+      <CarSideBar />
+      <NuxtPage />
     </div>
   </div>
 </template>
 
 <script setup>
 const route = useRoute();
+
 useHead({
   title: `${
     route.params.make
@@ -21,6 +19,8 @@ useHead({
     route.params.city,
   )}`,
 });
+
+definePageMeta({ layout: 'custom' });
 
 function toTitleCase(str) {
   return str.replace(
