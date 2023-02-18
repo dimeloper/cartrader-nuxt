@@ -1,7 +1,7 @@
 <template>
   <!-- CAR HERO -->
   <div class="mt-10">
-    <img
+    <NuxtImg
       class="w-full"
       :src="car.url"
       alt="" />

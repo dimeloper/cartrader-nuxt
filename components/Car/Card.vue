@@ -8,7 +8,7 @@
       )
     ">
     <div class="flex h-full">
-      <img
+      <NuxtImg
         class="w-[300px] h-full"
         :src="car.url"
         alt="" />
