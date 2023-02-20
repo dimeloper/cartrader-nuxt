@@ -72,9 +72,7 @@ const onChangeMake = (make: string) => {
   );
 };
 
-const onChangePrice = (
-  price: string,
-) => {
+const onChangePrice = () => {
   updateModal('price');
   if (
     priceRange.value.min &&
