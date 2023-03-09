@@ -1,6 +1,15 @@
 <script setup>
 definePageMeta({
   layout: 'custom',
+  middleware: [
+    function (to, from) {
+      const user = useSupabaseUser();
+      if (user.value) {
+        return;
+      }
+      return navigateTo('/login');
+    },
+  ],
 });
 
 const { makes } = useCars();
@@ -73,7 +82,7 @@ const inputs = [
       </h1>
     </div>
     <div
-      class="shadow rounded p-3 mt-5 flex flex-wrap justify-between">
+      class="flex flex-wrap justify-between p-3 mt-5 rounded shadow">
       <CarAdSelect
         title="Make *"
         :options="makes"
