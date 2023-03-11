@@ -2,7 +2,7 @@ export default async (
   city: string,
   filters: Object,
 ) => {
-  const { data, error } =
+  const { data, error, refresh } =
     await useFetch(
       `/api/cars/${city}`,
       {
@@ -20,5 +20,5 @@ export default async (
     });
   }
 
-  return data;
+  return { data, refresh };
 };
