@@ -32,17 +32,26 @@ const priceRangeText = computed(() => {
   }
 });
 
-const updateModal = (key: string) => {
+const toggleModal = (key: string) => {
   switch (key) {
     case 'location':
+      modal.value.make = false;
+      modal.value.price = false;
       modal.value.location =
         !modal.value.location;
+      return;
     case 'make':
+      modal.value.location = false;
+      modal.value.price = false;
       modal.value.make =
         !modal.value.make;
+      return;
     case 'price':
+      modal.value.location = false;
+      modal.value.make = false;
       modal.value.price =
         !modal.value.price;
+      return;
   }
 };
 
@@ -58,7 +67,7 @@ const onChangeLocation = () => {
     });
   }
 
-  updateModal('location');
+  toggleModal('location');
   navigateTo(
     `/city/${mcity.value}/car/${mroute.params.make}`,
   );
@@ -66,14 +75,20 @@ const onChangeLocation = () => {
 };
 
 const onChangeMake = (make: string) => {
-  updateModal('make');
-  navigateTo(
-    `/city/${mroute.params.city}/car/${make}`,
-  );
+  toggleModal('make');
+  if (make === 'Any') {
+    navigateTo(
+      `/city/${mroute.params.city}/car`,
+    );
+  } else {
+    navigateTo(
+      `/city/${mroute.params.city}/car/${make}`,
+    );
+  }
 };
 
 const onChangePrice = () => {
-  updateModal('price');
+  toggleModal('price');
   if (
     priceRange.value.min &&
     priceRange.value.max
@@ -103,13 +118,13 @@ const onChangePrice = () => {
       class="relative flex justify-between p-5 border-b cursor-pointer">
       <h3>Location</h3>
       <h3
-        @click="updateModal('location')"
+        @click="toggleModal('location')"
         class="text-blue-400 capitalize">
         {{ mroute.params.city }}
       </h3>
       <div
         v-if="modal.location"
-        class="absolute p-5 -m-1 bg-white border shadow left-56 top-1">
+        class="absolute p-5 -m-1 bg-white border shadow left-72 top-1">
         <input
           v-model="mcity"
           type="text"
@@ -128,13 +143,13 @@ const onChangePrice = () => {
       <h3>Make</h3>
       <h3
         class="text-blue-400 capitalize"
-        @click="updateModal('make')">
+        @click="toggleModal('make')">
         {{
           mroute.params.make || 'any'
         }}
       </h3>
       <div
-        class="absolute border shadow left-56 p-5 top-1 -m-1 w-[600px] flex justify-between flex-wrap bg-white"
+        class="absolute border shadow left-72 p-5 top-1 -m-1 w-[600px] flex justify-between flex-wrap bg-white"
         v-if="modal.make">
         <h4
           v-for="make in makes"
@@ -152,24 +167,24 @@ const onChangePrice = () => {
       <h3>Price</h3>
       <h3
         class="text-blue-400 capitalize"
-        @click="updateModal('price')">
+        @click="toggleModal('price')">
         {{ priceRangeText }}
       </h3>
       <div
-        class="absolute border shadow left-56 p-5 top-1 -m-1 bg-white"
+        class="absolute p-5 -m-1 bg-white border shadow left-72 top-1"
         v-if="modal.price">
         <input
-          class="border p-1 rounded"
+          class="p-1 border rounded"
           type="number"
           placeholder="Min"
           v-model="priceRange.min" />
         <input
-          class="border p-1 rounded"
+          class="p-1 border rounded"
           type="number"
           placeholder="Max"
           v-model="priceRange.max" />
         <button
-          class="bg-blue-400 w-full mt-2 rounded text-white p-1"
+          class="w-full p-1 mt-2 text-white bg-blue-400 rounded"
           @click="onChangePrice">
           Apply
         </button>
