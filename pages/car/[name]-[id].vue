@@ -11,20 +11,16 @@
 
 <script setup scoped>
 const route = useRoute();
+
 const { toTitleCase } = useUtilities();
-const { cars } = useCars();
 
 useHead({
   title: toTitleCase(route.params.name),
 });
 
-const car = computed(() => {
-  return cars.find(
-    (car) =>
-      car.id ===
-      parseInt(route.params.id),
-  );
-});
+const { data: car } = await useFetchCar(
+  route.params.id,
+);
 
 if (!car.value) {
   throw createError({

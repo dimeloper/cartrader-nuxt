@@ -27,6 +27,13 @@ watch(
 
 <template>
   <div>
-    <CarCards :cars="cars ?? []" />
+    <CarCards
+      v-if="cars?.length"
+      :cars="cars ?? []" />
+    <h1
+      class="p-4 font-semibold"
+      v-else>
+      No Cars found with applied filters
+    </h1>
   </div>
 </template>
