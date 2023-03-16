@@ -23,9 +23,7 @@ export default defineEventHandler(
         },
       });
     } else {
-      throw Error(
-        'UserId has not been provided.',
-      );
+      return [];
     }
   },
 );
