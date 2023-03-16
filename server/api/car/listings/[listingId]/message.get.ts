@@ -9,17 +9,10 @@ export default defineEventHandler(async (event) => {
   ) {
     const { listingId } = event.context.params;
 
-    await prisma.car.delete({
+    return prisma.message.findMany({
       where: {
-        id: parseInt(listingId),
+        listingId: parseInt(listingId),
       },
     });
-
-    return {
-      deleted: true,
-      listingId,
-    };
-  } else {
-    throw Error('ListingId has not been provided.');
   }
 });

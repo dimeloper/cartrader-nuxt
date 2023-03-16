@@ -1,68 +1,52 @@
-import cars from '@/data/cars.json';
+import { PrismaClient } from '@prisma/client';
 
-export default defineEventHandler(
-  (event) => {
-    if (
-      event.context.params &&
-      'city' in event.context.params
-    ) {
-      const { city } =
-        event.context.params;
+const prisma = new PrismaClient();
 
-      let filteredCars = cars;
+export default defineEventHandler((event) => {
+  if (
+    event.context.params &&
+    'city' in event.context.params
+  ) {
+    const { city } = event.context.params;
 
-      filteredCars =
-        filteredCars.filter(
-          (car) =>
-            car.city.toLowerCase() ===
-            city.toLowerCase(),
-        );
+    const filters: {
+      city: string;
+      make?: string;
+      price?: { gte?: number; lte?: number };
+    } = {
+      city: city.toLowerCase(),
+    };
 
-      const {
-        make,
-        minPrice,
-        maxPrice,
-      } = getQuery(event);
+    const { make, minPrice, maxPrice } = getQuery(event);
 
-      if (
-        make &&
-        typeof make === 'string'
-      ) {
-        filteredCars =
-          filteredCars.filter(
-            (car) =>
-              car.make.toLowerCase() ===
-              make.toLowerCase(),
-          );
-      }
-
-      if (
-        minPrice &&
-        typeof minPrice === 'string'
-      ) {
-        filteredCars =
-          filteredCars.filter(
-            (car) =>
-              car.price >=
-              parseInt(minPrice),
-          );
-      }
-
-      if (
-        maxPrice &&
-        typeof maxPrice === 'string'
-      ) {
-        filteredCars =
-          filteredCars.filter(
-            (car) =>
-              car.price <=
-              parseInt(maxPrice),
-          );
-      }
-
-      return filteredCars;
+    if (make && typeof make === 'string') {
+      filters.make = make;
     }
 
-    return cars;
-  },
-);
+    if (minPrice || maxPrice) {
+      filters.price = {};
+    }
+
+    if (
+      minPrice &&
+      typeof minPrice === 'string' &&
+      filters.price
+    ) {
+      filters.price.gte = parseInt(minPrice);
+    }
+
+    if (
+      maxPrice &&
+      typeof maxPrice === 'string' &&
+      filters.price
+    ) {
+      filters.price.lte = parseInt(maxPrice);
+    }
+
+    return prisma.car.findMany({
+      where: filters,
+    });
+  }
+
+  return prisma.car.findMany();
+});

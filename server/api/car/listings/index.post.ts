@@ -22,9 +22,7 @@ const schema = Joi.object({
   listerId: Joi.string().required(),
   price: Joi.number().min(0),
   name: Joi.string().required(),
-  description: Joi.string()
-    .min(20)
-    .required(),
+  description: Joi.string().min(20).required(),
 });
 
 export default defineEventHandler(
@@ -59,23 +57,21 @@ export default defineEventHandler(
       city,
     } = body;
 
-    const car = await prisma.car.create(
-      {
-        data: {
-          image,
-          make,
-          model,
-          numberOfSeats,
-          miles,
-          price,
-          features,
-          name,
-          description,
-          listerId,
-          city: city.toLowerCase(),
-        },
+    const car = await prisma.car.create({
+      data: {
+        image,
+        make,
+        model,
+        numberOfSeats,
+        miles,
+        price,
+        features,
+        name,
+        description,
+        listerId,
+        city: city.toLowerCase(),
       },
-    );
+    });
 
     return { value, error };
   },

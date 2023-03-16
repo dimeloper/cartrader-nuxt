@@ -1,26 +1,25 @@
-import cars from '@/data/cars.json';
+import { PrismaClient } from '@prisma/client';
 
-export default defineEventHandler(
-  (event) => {
-    if (
-      event.context.params &&
-      'id' in event.context.params
-    ) {
-      const { id } =
-        event.context.params;
+const prisma = new PrismaClient();
 
-      const car = cars.find(
-        (c) => c.id === parseInt(id),
-      );
+export default defineEventHandler(async (event) => {
+  if (
+    event.context.params &&
+    'id' in event.context.params
+  ) {
+    const { id } = event.context.params;
 
-      if (car == null) {
-        throw createError({
-          statusCode: 404,
-          statusMessage: `Car with id of ${id} does not exist.`,
-        });
-      } else {
-        return car;
-      }
+    const car = await prisma.car.findUnique({
+      where: { id: parseInt(id) },
+    });
+
+    if (car == null) {
+      throw createError({
+        statusCode: 404,
+        statusMessage: `Car with id of ${id} does not exist.`,
+      });
+    } else {
+      return car;
     }
-  },
-);
+  }
+});
