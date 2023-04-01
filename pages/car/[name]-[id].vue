@@ -1,14 +1,3 @@
-<template>
-  <div v-if="car">
-    <CarDetailHero :car="car" />
-    <CarDetailAttributes
-      :features="car.features" />
-    <CarDetailDescription
-      :description="car.description" />
-    <CarDetailContact />
-  </div>
-</template>
-
 <script setup scoped>
 const route = useRoute();
 
@@ -18,9 +7,7 @@ useHead({
   title: toTitleCase(route.params.name),
 });
 
-const { data: car } = await useFetchCar(
-  route.params.id,
-);
+const { data: car } = await useFetchCar(route.params.id);
 
 if (!car.value) {
   throw createError({
@@ -31,3 +18,12 @@ if (!car.value) {
 
 definePageMeta({ layout: 'custom' });
 </script>
+
+<template>
+  <div v-if="car">
+    <CarDetailHero :car="car" />
+    <CarDetailAttributes :features="car.features" />
+    <CarDetailDescription :description="car.description" />
+    <CarDetailContact />
+  </div>
+</template>

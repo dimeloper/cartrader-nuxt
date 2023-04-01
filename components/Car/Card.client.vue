@@ -3,39 +3,26 @@
   <div
     class="relative shadow border w-full overflow-hidden mb-5 cursor-pointer h-[200px]">
     <img
-      @click="
-        emitFavour('favour', car.id)
-      "
-      class="absolute w-7 right-5 top-2 z-20"
-      :src="
-        favoured
-          ? heartFilled
-          : heartOutline
-      " />
+      @click="emitFavour('favour', car.id)"
+      class="absolute z-20 w-7 right-5 top-2"
+      :src="favoured ? heartFilled : heartOutline" />
     <div
       class="flex h-full"
-      @click="
-        navigateTo(
-          `/car/${car.name}-${car.id}`,
-        )
-      ">
+      @click="navigateTo(`/car/${car.name}-${car.id}`)">
       <NuxtImg
         class="w-[300px] h-full"
-        :src="car.url"
+        :src="car.image"
         alt="" />
       <div class="flex flex-col p-4">
         <div>
-          <h1
-            class="text-2xl text-blue-700">
+          <h1 class="text-2xl text-blue-700">
             {{ car.name }}
           </h1>
           <p class="text-gray-700">
             {{ car.description }}
           </p>
         </div>
-        <h1 class="mt-auto text-xl">
-          ${{ car.price }}
-        </h1>
+        <h1 class="mt-auto text-xl">${{ car.price }}</h1>
       </div>
     </div>
   </div>
@@ -50,7 +37,5 @@ const props = defineProps({
   favoured: Boolean,
 });
 
-const emitFavour = defineEmits([
-  'favour',
-]);
+const emitFavour = defineEmits(['favour']);
 </script>
