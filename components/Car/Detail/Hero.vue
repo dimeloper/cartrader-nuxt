@@ -2,12 +2,17 @@
 const props = defineProps({
   car: Object,
 });
+
+const config = useRuntimeConfig();
 </script>
 
 <template>
   <!-- CAR HERO -->
   <div class="mt-10">
-    <NuxtImg class="w-full" :src="car.image" alt="" />
+    <NuxtImg
+      class="w-full"
+      :src="`${config.public.supabase.url}/storage/v1/object/public/cartrader-images/${car.image}`"
+      alt="" />
     <h1 class="mt-10 text-4xl">
       {{ car.name }}
     </h1>

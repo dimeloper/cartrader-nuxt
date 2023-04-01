@@ -1,3 +1,16 @@
+<script setup>
+import heartFilled from '@/assets/heartFilled.png';
+import heartOutline from '@/assets/heartOutline.png';
+
+const props = defineProps({
+  car: Object,
+  favoured: Boolean,
+});
+
+const emitFavour = defineEmits(['favour']);
+const config = useRuntimeConfig();
+</script>
+
 <template>
   <!-- CAR CARD -->
   <div
@@ -11,7 +24,7 @@
       @click="navigateTo(`/car/${car.name}-${car.id}`)">
       <NuxtImg
         class="w-[300px] h-full"
-        :src="car.image"
+        :src="`${config.public.supabase.url}/storage/v1/object/public/cartrader-images/${car.image}`"
         alt="" />
       <div class="flex flex-col p-4">
         <div>
@@ -27,15 +40,3 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import heartFilled from '@/assets/heartFilled.png';
-import heartOutline from '@/assets/heartOutline.png';
-
-const props = defineProps({
-  car: Object,
-  favoured: Boolean,
-});
-
-const emitFavour = defineEmits(['favour']);
-</script>

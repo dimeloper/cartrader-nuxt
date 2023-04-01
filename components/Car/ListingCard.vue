@@ -4,13 +4,14 @@ const props = defineProps({
 });
 
 const emits = defineEmits(['deleteClick']);
+const config = useRuntimeConfig();
 </script>
 <template>
   <div
     class="flex justify-between mb-4 overflow-hidden rounded shadow">
     <div class="flex">
       <img
-        :src="listing.url"
+        :src="`${config.public.supabase.url}/storage/v1/object/public/cartrader-images/${listing.image}`"
         alt=""
         class="mr-3 w-80 h-44" />
       <div class="p-3">
