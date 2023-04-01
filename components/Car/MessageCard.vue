@@ -1,25 +1,20 @@
+<script setup>
+defineProps({
+  message: Object,
+});
+</script>
+
 <template>
-  <div class="even:bg-gray-100 p-4">
-    <h1 class="font-bold text-2xl">
-      Laith Harb
-    </h1>
+  <div class="p-4 even:bg-gray-100">
+    <h1 class="text-2xl font-bold">{{ message.name }}</h1>
     <p class="text-gray-700">
-      Lorem ipsum dolor sit, amet
-      consectetur adipisicing elit.
-      Ducimus nesciunt quas suscipit
-      totam vero aliquid pariatur fugit
-      eum id. Magnam nemo amet
-      voluptatibus architecto doloribus!
-      Ullam dolorum saepe soluta.
-      Aliquam.
+      {{ message.message }}
     </p>
     <div class="flex items-center mt-4">
-      <p class="text-green-700 mr-10">
-        laith@email.com
+      <p class="mr-10 text-green-700">
+        {{ message.email }}
       </p>
-      <p class="text-blue-500">
-        555-555-5555
-      </p>
+      <p class="text-blue-500">{{ message.phone }}</p>
     </div>
   </div>
 </template>
