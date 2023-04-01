@@ -48,3 +48,7 @@ In order to have the authorisation and the persistence running you are going to 
 
 The ORM has been initialised with the command `npx prisma init`. More information regarding the postgres models can be found within the `prisma` directory.
 Whenever there is a change or a new model needs to be added, we can update the db by running `npx prisma db push`.
+
+# Debugging Supabase connection error
+
+In case you encounter any weird db connection issues see: [related issue](https://github.com/prisma/prisma/issues/11643#issuecomment-1268341203).

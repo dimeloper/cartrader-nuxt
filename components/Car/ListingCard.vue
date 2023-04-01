@@ -2,32 +2,33 @@
 const props = defineProps({
   listing: Object,
 });
+
+const emits = defineEmits(['deleteClick']);
 </script>
 <template>
   <div
-    class="shadow rounded overflow-hidden flex justify-between mb-4">
+    class="flex justify-between mb-4 overflow-hidden rounded shadow">
     <div class="flex">
       <img
         :src="listing.url"
         alt=""
-        class="w-80 mr-3 h-44" />
+        class="mr-3 w-80 h-44" />
       <div class="p-3">
         <h1 class="text-2xl">
           {{ listing.name }}
         </h1>
-        <p class="text-blue-400">
-          ${{ listing.price }}
-        </p>
+        <p class="text-blue-400">${{ listing.price }}</p>
       </div>
     </div>
-    <div class="p-3 flex">
+    <div class="flex p-3">
       <NuxtLink
-        class="text-blue-400 mr-5"
+        class="mr-5 text-blue-400"
         :to="`/profile/listings/view/${listing.id}`">
         View
       </NuxtLink>
       <p
-        class="text-red-400 cursor-pointer">
+        class="text-red-400 cursor-pointer"
+        @click="emits('deleteClick', listing.id)">
         Delete
       </p>
     </div>
